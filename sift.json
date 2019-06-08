@@ -1,0 +1,70 @@
+{
+  "name": "hello-world",
+  "display-name": "Hello World Sift",
+  "description": "",
+  "author": "",
+  "version": "1.0.0",
+  "icon": "assets/blueprint.svg",
+  "interfaces": {
+    "email": {
+      "thread" : {
+        "controller": "dist/js/controller.umd-es2015.min.js"
+      },
+      "client" : {
+        "controller": "dist/js/email-client-controller.umd-es2015.min.js"
+      }
+    },
+    "summary": {
+      "controller": "dist/js/controller.umd-es2015.min.js"
+    }
+  },
+  "dag": {
+    "inputs":{
+      "emails": {},
+      "slack-bot": {},
+      "webhooks": {
+        "curl_input": {
+          "inbound": {
+            "uri": "{key}/{value}"
+          }
+        }
+      },
+      "rpc": {}
+    },
+    "nodes":[{
+      "#": "JS Node",
+      "implementation": {
+        "javascript": "server/node1.js"
+      },
+      "input": {
+        "bucket": "curl_input"
+      },
+      "outputs":{
+        "hello": {}
+      }
+    }, {
+      "#": "Python",
+      "implementation": {
+        "python": "server/node2.py"
+      },
+      "input": {
+        "bucket": "hello"
+      },
+      "outputs":{
+        "who": {}
+      }
+    }],
+    "stores":{
+      "hello": {
+        "key$schema": "string"
+      }
+    },
+    "outputs":{
+      "exports": {
+        "who": {
+          "key$schema": "string"
+        }
+      }
+    }
+  }
+}
