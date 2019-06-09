@@ -21,3 +21,8 @@ body, html {
   align-items: center;
   padding: 2em;
 }
+
+#webhook_uri {
+  font-size: 10px;
+  word-wrap: break-word;
+}
